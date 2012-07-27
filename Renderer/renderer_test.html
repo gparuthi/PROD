@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+   <head>
+   	<script src="js/render.js" type="text/javascript"> </script>
+ <script src="js/cdb-studio.js" ></script>
+ <script src="js/sockets.js" type="text/javascript"></script>
+ <script src="js/easeljs-0.4.2.min.js" type="text/javascript"></script>
+</head>
+ <body onload="init()">
+  
+      <noscript>You must enable JavaScript</noscript>
+
+  <div class="canvasHolder">
+		<div id="e" style="z-index: 1; position: absolute; background-color: #FF0000; width:320px; height:260px; padding: 5px; visibility: hidden;">
+			<b>Hello! I'm an HTML div.</b><br/><br/>
+			I am not rendered to the canvas, but I can be included in the display list for positioning and transformations.<br/><br/>
+			This means I can contain any HTML content (rich text, forms, video, etc), but I'm not a full part of the EaselJS display list.<br/><br/>
+			<a href="http://easeljs.com/">This is a link</a>
+		</div>
+		<canvas id="testCanvas" width="960" height="300"></canvas>
+	</div>
+  
+   </body>
+
+</html>

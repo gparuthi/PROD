@@ -46,8 +46,8 @@ class BroadcastServerFactory(WebSocketServerFactory):
    currently connected clients.
    """
 
-   def __init__(self, url, debug = False, debugCodePaths = False):
-      WebSocketServerFactory.__init__(self, url, debug = debug, debugCodePaths = debugCodePaths)
+   def __init__(self, url, debug=False, debugCodePaths=False):
+      WebSocketServerFactory.__init__(self, url, debug=debug, debugCodePaths=debugCodePaths)
       self.clients = []
       self.tickcount = 0
       #self.tick()
@@ -100,11 +100,11 @@ if __name__ == '__main__':
    #ServerFactory = BroadcastPreparedServerFactory
 
    factory = ServerFactory("ws://localhost:9000",
-                           debug = debug,
-                           debugCodePaths = debug)
+                           debug=debug,
+                           debugCodePaths=debug)
 
    factory.protocol = BroadcastServerProtocol
-   factory.setProtocolOptions(allowHixie76 = True)
+   factory.setProtocolOptions(allowHixie76=True)
    listenWS(factory)
 
    webdir = File(".")

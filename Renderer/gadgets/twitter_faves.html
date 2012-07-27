@@ -26,36 +26,33 @@ if(!window.twttr){window.twttr={}}(function(){twttr.txt={};twttr.txt.regexen={};
 
 
 parameters = getUrlVars(); //which leads to:
-ids= parameters['ids'].replace('%22','')
-console.log(ids); //Writes 'value1' to console
-
+console.log(parameters['ids']); //Writes 'value1' to console
 
 new TWTR.Widget({
   version: 2,
-  type: 'search',
-  search: ids,
+  type: 'faves',
+  rpp: 10,
   interval: 30000,
-  title: ids,
-  subject: 'Across the sky',
+  title: 'The best of Twitter according to',
+  subject: 'Top Tweets',
   width: 250,
   height: 300,
   theme: {
     shell: {
-      background: '#8ec1da',
+      background: '#43c43f',
       color: '#ffffff'
     },
     tweets: {
       background: '#ffffff',
       color: '#444444',
-      links: '#1985b5'
+      links: '#43c43f'
     }
-    
   },
   features: {
-    scrollbar: false,
-    loop: true,
+    scrollbar: true,
+    loop: false,
     live: true,
-    behavior: 'default'
+    behavior: 'all'
   }
-}).render().start();
+}).render().setUser('toptweets').start();
 </script>

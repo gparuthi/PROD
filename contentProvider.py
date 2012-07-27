@@ -1,5 +1,7 @@
 import redis
 from json import dumps, loads
+from websocket import create_connection
+
 
 rc = redis.Redis(host='dhcp3-173.si.umich.edu', port=6379, db=0)
 
@@ -29,6 +31,31 @@ def UnionActions(_actions, finalActions):
             finalActions[a] = _actions[a]
     return finalActions
 
+
+def TwitterIdJS(ids):
+    print ids
+    #returns the js code for the twitter app 
+    ret = "gadgets/twitter_search.html?ids=\x22"+','.join(ids)+"\x22"
+    return ret
+
+def TwitterTagsJS(ids):
+    print ids
+    #returns the js code for the twitter app 
+    ret = "gadgets/twitter_search.html?ids=\x22"+' OR '.join(ids)+"\x22"
+    return ret
+
+def FlickrTags(ids):
+    print ids
+    #returns the js code for the twitter app 
+    ret = "gadgets/flickr_tags.html?ids=\x22"+','.join(ids)+"\x22"
+    return ret
+
+def FlickrIds(ids):
+    print ids
+    #returns the js code for the twitter app 
+    ret = "gadgets/flickr_ids.html?ids=\x22"+','.join(ids)+"\x22"
+    return ret
+
 for item in ps.listen():
     finalActions={}
     if item['type'] == 'message':
@@ -41,3 +68,36 @@ for item in ps.listen():
             #publish it to the renderer channel
             rc.publish('renderer', dumps(finalActions))
             print finalActions
+            
+            
+        for ac in finalActions:
+            print "key:" + ac
+            if(ac=="twitter_ids"):
+                ws = create_connection("ws://localhost:9000")
+                #3 according to the output application, load the js code for each widget and broadcast it to the browser
+                msg = TwitterIdJS(finalActions[ac])
+                print msg
+                ws.send(msg)
+                ws.close()
+            if(ac=="twitter_tags"):
+                ws = create_connection("ws://localhost:9000")
+                #3 according to the output application, load the js code for each widget and broadcast it to the browser
+                msg = TwitterTagsJS(finalActions[ac])
+                print msg
+                ws.send(msg)
+                ws.close()
+            if(ac=="flickr_tags"):
+                ws = create_connection("ws://localhost:9000")
+                #3 according to the output application, load the js code for each widget and broadcast it to the browser
+                msg = FlickrTags(finalActions[ac])
+                print msg
+                ws.send(msg)
+                ws.close()
+            if(ac=="flickr_ids"):
+                ws = create_connection("ws://localhost:9000")
+                #3 according to the output application, load the js code for each widget and broadcast it to the browser
+                msg = FlickrTags(finalActions[ac])
+                print msg
+                ws.send(msg)
+                ws.close()
+

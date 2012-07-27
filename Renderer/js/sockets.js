@@ -1,5 +1,6 @@
       var sock = null;
 var ellog = null;
+var idno =0;
 
 window.onload = function() {
 
@@ -46,13 +47,23 @@ function send() {
 	log("Not connected.");
     }
 };
-
+function sendTwitter() {
+    var msg = "<iframe frameborder=0 height=330 scrolling=no src=gadgets/twitter_search.html width=335></iframe>";
+    if (sock) {
+	sock.send(msg);
+	log("Sent: " + msg);
+    } else {
+	log("Not connected.");
+    }
+};
 function log(m) {
     //ellog.innerHTML += m + '\n';
     //ellog.scrollTop = ellog.scrollHeight;
-
+	 m = "<iframe frameborder=0 height=330 width=335 scrolling=no src=" +m + "></script>";
         
-      
+      idno = idno+1;
+      var id = 'id'+idno;
+       
             var css_link = $("<link>", {
 		    rel: "stylesheet",
 		    type: "text/css",
@@ -62,7 +73,7 @@ function log(m) {
 		//element = "<div>"+m+"</div>";
 		//		ellog.innerHTML += element +'\n';
 
-		id = $("#e > div").size();
+		
 		console.log(id);
 
 		element = "<div style='display:none;' id='"+id+"'>"+m+"</div>";
@@ -70,6 +81,9 @@ function log(m) {
 		
 		elediv = document.getElementById(id);
 
-		$(elediv).fadeIn(3000);    
+		$(elediv).fadeIn(3000);
+		
+		init(id,250,300);
+		
 };
      
