@@ -2,8 +2,11 @@ import redis
 from json import dumps, loads
 from websocket import create_connection
 
+REDIS_SERVER_URL = 'dhcp3-173.si.umich.edu'
+REDIS_SERVER_PORT = 6379
+WEBSOCKET_SERVER_URL = "ws://localhost:9000";#'dhcp3-173.si.umich.edu:9000'
 
-rc = redis.Redis(host='dhcp3-173.si.umich.edu', port=6379, db=0)
+rc = redis.Redis(host=REDIS_SERVER_URL, port=REDIS_SERVER_PORT, db=0)
 
 ps = rc.pubsub()
 ps.subscribe(['user_actions','All'])
@@ -69,7 +72,9 @@ for item in ps.listen():
             rc.publish('renderer', dumps(finalActions))
             print finalActions
             
-        ws = create_connection("ws://localhost:9000")
+        ws = create_connection(WEBSOCKET_SERVER_URL)
+        ws.send("RESET");
+        
         for ac in finalActions:
             print "key:" + ac
             if(ac=="twitter_ids"):
