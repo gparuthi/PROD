@@ -69,35 +69,34 @@ for item in ps.listen():
             rc.publish('renderer', dumps(finalActions))
             print finalActions
             
-            
+        ws = create_connection("ws://localhost:9000")
         for ac in finalActions:
             print "key:" + ac
             if(ac=="twitter_ids"):
-                ws = create_connection("ws://localhost:9000")
                 #3 according to the output application, load the js code for each widget and broadcast it to the browser
                 msg = TwitterIdJS(finalActions[ac])
                 print msg
                 ws.send(msg)
-                ws.close()
             if(ac=="twitter_tags"):
-                ws = create_connection("ws://localhost:9000")
+                
                 #3 according to the output application, load the js code for each widget and broadcast it to the browser
                 msg = TwitterTagsJS(finalActions[ac])
                 print msg
                 ws.send(msg)
-                ws.close()
+                
             if(ac=="flickr_tags"):
-                ws = create_connection("ws://localhost:9000")
+                
                 #3 according to the output application, load the js code for each widget and broadcast it to the browser
                 msg = FlickrTags(finalActions[ac])
                 print msg
                 ws.send(msg)
-                ws.close()
+                
             if(ac=="flickr_ids"):
-                ws = create_connection("ws://localhost:9000")
+                
                 #3 according to the output application, load the js code for each widget and broadcast it to the browser
                 msg = FlickrTags(finalActions[ac])
                 print msg
                 ws.send(msg)
-                ws.close()
+             
+        ws.close()
 
