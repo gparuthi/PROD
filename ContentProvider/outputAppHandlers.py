@@ -1,3 +1,9 @@
+'''
+Created on Jul 28, 2012
+
+@author: gparuthi
+'''
+
 def TwitterIdJS(ids):
     print ids
     #returns the js code for the twitter app 

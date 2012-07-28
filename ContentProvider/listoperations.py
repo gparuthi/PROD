@@ -1,3 +1,9 @@
+'''
+Created on Jul 28, 2012
+
+@author: gparuthi
+'''
+
 def unique(a):
     """ return the list with duplicate elements removed """
     return list(set(a))
