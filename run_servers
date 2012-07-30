@@ -1,6 +1,6 @@
 screen -d
 cd /Users/gaurav/Documents/Work/PROD/PROD
-echo Adding paths
+echo Adding paths`
 python addPaths.py
 screen -S bilbo -X screen -t Websocket_Server
 screen -S bilbo -p 0 -X exec python /Users/gaurav/Documents/Work/PROD/PROD/Renderer/server.py 
