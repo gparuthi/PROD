@@ -1,8 +1,8 @@
 import redis
-from json import loads, dumps
+from json import dumps
 import sched, time
+from com.retry_decorator import Retry
 
-s = sched.scheduler(time.time, time.sleep)
 
 rc = redis.Redis(host='dhcp3-173.si.umich.edu', port=6379, db=0)
 
@@ -25,5 +25,10 @@ def do_something(sc):
     # do your stuff
     sc.enter(1, 1, do_something, (sc,))
 
-s.enter(2, 1, do_something, (s,))
-s.run()
+@Retry(86400,delay=5)
+def main(): 
+    s = sched.scheduler(time.time, time.sleep)
+    s.enter(2, 1, do_something, (s,))
+    s.run()
+    
+main()
