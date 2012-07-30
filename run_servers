@@ -1,7 +1,5 @@
 screen -d
 cd /Users/gaurav/Documents/Work/PROD/PROD
-echo 'Adding paths'
-python add_paths.py
 screen -S bilbo -X screen -t Websocket_Server
 screen -S bilbo -p 0 -X exec python /Users/gaurav/Documents/Work/PROD/PROD/Renderer/server.py 
 screen -S bilbo -X screen -t content_provider
