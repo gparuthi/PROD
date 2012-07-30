@@ -1,7 +1,7 @@
 import redis
 from json import dumps
 import sched, time
-from com.retry_decorator import Retry
+from PROD2.com.retry_decorator import Retry
 
 
 rc = redis.Redis(host='dhcp3-173.si.umich.edu', port=6379, db=0)
