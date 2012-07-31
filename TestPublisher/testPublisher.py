@@ -26,7 +26,7 @@ def do_something(sc):
 
     rc.publish('user_actions', 'updated')
     # do your stuff
-    sc.enter(4, 1, do_something_diff, (sc,))
+    sc.enter(7, 1, do_something_diff, (sc,))
 
 def do_something_diff(sc): 
     print "Doing stuff..."
@@ -35,7 +35,7 @@ def do_something_diff(sc):
 
     rc.publish('user_actions', 'updated')
     # do your stuff
-    sc.enter(4, 1, do_something, (sc,))
+    sc.enter(8, 1, do_something, (sc,))
 
 #@Retry(86400,delay=5)
 def main(): 

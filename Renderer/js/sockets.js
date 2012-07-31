@@ -52,7 +52,7 @@ MAX_Y = window.screen.height;
 		stage.addChild(o);
 
 		container.addChild(content);
-		coords = getCoordinates(width,height);
+		coords = getCoordinates(id,width,height);
 		
 		container.x = coords.X;
 		container.y = coords.Y;
@@ -168,24 +168,48 @@ function log(m) {
 
 		
 };
-function getCoordinates(width, height)
-{
-	// this function should idially return coordinates for an empty area on the canvas
-	// however for now its random within the range of screen-(Width or height)
+// create a matrix describing the screen space
+// each node is about 300x300 (about one widget) 
+var a = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
+var id_co_dict = [];
 
+function getCoordinates(id, width, height)
+{
+	x=0;
+	y=0;
+	res = a[y][x];
+	count=0;
+	while (a[y][x] == 1 && count <10)
+	{
+		// randomly select a square and check if its empty (0)
+		x = Math.floor(Math.random()*(4));
+		y = Math.floor(Math.random()*(3));
+		count++;
+	}		
+//	console.log(x+" "+ y)
+	a[y][x] = 1
+	id_co_dict[id]=[];
+	id_co_dict[id].x = x;
+	id_co_dict[id].y = y;
+	
 	var ret = [];
-	console.log (MAX_X);
-	ret.X = Math.floor(Math.random()*(MAX_X - width));
-	ret.Y =  Math.floor(Math.random()*(MAX_Y - height));
+	//randomly find some area around this square
+	ret.X = Math.floor(Math.random()*(100)) + x*300;
+	ret.Y = Math.floor(Math.random()*(100)) + y*200;
+	
 	console.log (ret.X + " " + ret.Y);
 	return ret
 }
 
 function RemoveIds(id)
 {
-	$('#'+id).fadeOut(1000);
-	$('#'+id).remove();
-
+	if($('#' + id).length != 0)
+	{
+		$('#'+id).fadeOut(4000, function(){$('#'+id).remove();});
+		
+		
+		a[id_co_dict[id].y][id_co_dict[id].x] = 0;
+	}
 }
 function RemoveExistingIds()
 {
