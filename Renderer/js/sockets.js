@@ -1,5 +1,7 @@
 // beginning of the UI methods
-var WEBSOCKET_SERVER_URL = "ws://localhost:9000";//"ws://dhcp3-173.si.umich.edu:9000";
+var WEBSOCKET_SERVER_URL = "ws://dhcp3-173.si.umich.edu:9000";// "ws://localhost:9000";//"ws://dhcp3-173.si.umich.edu:9000";
+MAX_X = window.screen.width;
+MAX_Y = window.screen.height;
  var _nextX=0;
  var _nextY=0;
  
@@ -11,8 +13,7 @@ var WEBSOCKET_SERVER_URL = "ws://localhost:9000";//"ws://dhcp3-173.si.umich.edu:
  
  function updateXY(width,height)
  {
- 	MAX_X = window.screen.width;
- 	MAX_Y = window.screen.height;
+ 	
  	 
  	if(_nextX + width >MAX_X)
  	{
@@ -51,7 +52,11 @@ var WEBSOCKET_SERVER_URL = "ws://localhost:9000";//"ws://dhcp3-173.si.umich.edu:
 		stage.addChild(o);
 
 		container.addChild(content);
-		container.x = currentX+5; container.y = currentY+5;
+		coords = getCoordinates(width,height);
+		
+		container.x = coords.X;
+		container.y = coords.Y;
+		
 		//container.alpha = 0.6;
 		//container.rotation = 25;
 		//container.scaleX = 1.5;
@@ -123,48 +128,65 @@ function sendTwitter() {
     }
 };
 function log(m) {
-    //ellog.innerHTML += m + '\n';
-    //ellog.scrollTop = ellog.scrollHeight;
-    m = trim1(m);
-    //console.log(m);
-    if(m=='RESET')
+	
+	// read and convert the input to json
+	m = m.substr(m.indexOf('{'),m.indexOf('}'))
+	//console.log(m)
+	var a =	jQuery.parseJSON(m);
+	// a loooks likes {"src": "gadgets/flickr_tags.html?ids=cats,dogs", "h": 400, "id": "id2", "w": 300, "f": "A"} 
+	id = a['id'];
+    if(a['f']=='R')
     {
-    	//console.log("Resetting the view..");
-    	//remove all existing ids
-    	RemoveExistingIds();
+    	// R is for removing the id element
+    	console.log('Removing ' + id)
+    	RemoveIds(id);
     	//reset the UI xy positions
-    	resetXY();
+    	//resetXY();
    	}
-   	else
+   	else 
+   	//if (a['f'=='A'])
    	{
-	 
-		m = "<iframe frameborder=0 height=330 width=335 scrolling=no src=" + m + "></script>";
-
-		idno = idno + 1;
-		var id = getId(idno);
-
+		// Add the element to the div
+		src = "<iframe frameborder=0 height=330 width=335 scrolling=no src=" + a['src'] + "></script>";
+/*
 		var css_link = $("<link>", {
 			rel : "stylesheet",
 			type : "text/css",
 			href : "style.css"
 		});
 		css_link.appendTo('head');
-		//element = "<div>"+m+"</div>";
-		//		ellog.innerHTML += element +'\n';
-
-
-		element = "<div class='widgets' style='display:none;' id='" + id + "'>" + m + "</div>";
+	*/	
+		element = "<div class='widgets' style='display:none;' id='" + id + "'>" + src + "</div>";
 		$('#e').append(element);
 
 		elediv = document.getElementById(id);
 
 		$(elediv).fadeIn(3000);
 
-		init(id, 250, 300);
+		init(id, a['w'], a['h']);
 	}
 
 		
 };
+function getCoordinates(width, height)
+{
+	// this function should idially return coordinates for an empty area on the canvas
+	// however for now its random within the range of screen-(Width or height)
+
+	var ret = [];
+	console.log (MAX_X);
+	ret.X = Math.floor(Math.random()*(MAX_X - width));
+	ret.Y =  Math.floor(Math.random()*(MAX_Y - height));
+	console.log (ret.X + " " + ret.Y);
+	return ret
+}
+
+function RemoveIds(id)
+{
+	$('#'+id).fadeOut(1000);
+	$('#'+id).remove();
+
+}
 function RemoveExistingIds()
 {
 	$('.widgets').fadeOut(1000);

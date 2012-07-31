@@ -35,20 +35,29 @@ class BroadcastClientProtocol(WebSocketClientProtocol):
       reactor.callLater(2, self.sendHello)
 
    def onOpen(self):
-      self.sendHello()
+      #self.sendHello()
+      print "baa"
       
 
    def onMessage(self, msg, binary):
-      print "Got message: " + msg
+       try:
+            print msg
+            d = msg[msg.index('{'):-1]
+            print d
+            loads(d)
+       except ValueError:
+            print 'This is not a JSON object!'
+       else:
+            print ('JSON found!')
 
 
 if __name__ == '__main__':
 
-   factory = WebSocketClientFactory("ws://localhost:9000")
+   factory = WebSocketClientFactory("ws://dhcp3-173.si.umich.edu:9000")
    factory.protocol = BroadcastClientProtocol
    connectWS(factory)
 
-   #reactor.run()
+   reactor.run()
    
    
    
