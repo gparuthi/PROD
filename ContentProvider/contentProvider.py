@@ -14,6 +14,7 @@ from PROD2.com.retry_decorator import Retry
 
 
 REDIS_SERVER_URL = 'dhcp3-173.si.umich.edu'
+
 REDIS_SERVER_PORT = 6379
 WEBSOCKET_SERVER_URL = 'ws://dhcp3-173.si.umich.edu:9000'#"ws://localhost:9000";#'dhcp3-173.si.umich.edu:9000'
 CURRENT_OPERATION = union;
@@ -65,7 +66,7 @@ def RedisListener(ps,rc):
         if item['type'] == 'message':
             print item['channel'] + ':' + item['data']
             if item['data'] == 'updated':
-                print("sending to redis..")
+                print("sending to redis...")
                 #read the list user_action_list and send it to the function  
                 user_actions = rc.hgetall("user_action_HS")
                 for key in user_actions:
