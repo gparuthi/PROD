@@ -4,7 +4,7 @@ import sched, time
 from PROD2.com.retry_decorator import Retry
 
 
-rc = redis.Redis(host='dhcp3-173.si.umich.edu', port=6379, db=0)
+rc = redis.Redis(host='dhcp2-236.si.umich.edu', port=6379, db=0)
 
 rc.delete('user_action_HS')
 

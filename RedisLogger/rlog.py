@@ -6,6 +6,8 @@ Created on Aug 1, 2012
 import redis
 import datetime
 
+REDIS_SERVER_URL = 'dhcp2-236.si.umich.edu'
+
 def RedisListener(ps,rc):
     for item in ps.listen():
         finalActions={}
@@ -14,7 +16,7 @@ def RedisListener(ps,rc):
             print now.strftime("%Y-%m-%d %H:%M") + '::::' + item['data']
 
 if __name__ == '__main__':
-    rc = redis.Redis(host='dhcp3-173.si.umich.edu', port=6379, db=0)
+    rc = redis.Redis(host=REDIS_SERVER_URL, port=6379, db=0)
     ps = rc.pubsub()
     ps.subscribe(['log'])
     print('Listening...')
