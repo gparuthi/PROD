@@ -8,9 +8,9 @@ from json import loads, dumps
 from websocket import create_connection
 import outputAppHandlers
 
-REDIS_SERVER_URL = 'dhcp3-173.si.umich.edu'
+REDIS_SERVER_URL = 'dhcp2-236.si.umich.edu'
 REDIS_SERVER_PORT = 6379
-WEBSOCKET_SERVER_URL = 'ws://dhcp3-173.si.umich.edu:9000'#"ws://localhost:9000";#'dhcp3-173.si.umich.edu:9000'
+WEBSOCKET_SERVER_URL = 'ws://dhcp2-236.si.umich.edu:9000'#"ws://localhost:9000";#'dhcp3-173.si.umich.edu:9000'
 OUTPUT_JSON_SPEC = {'twitter_ids':[],'twitter_tags':[],'flickr_ids':[]}
 
 _curConf = {}
