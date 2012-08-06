@@ -11,7 +11,7 @@ import outputAppHandlers
 REDIS_SERVER_URL = 'dhcp2-236.si.umich.edu'
 REDIS_SERVER_PORT = 6379
 WEBSOCKET_SERVER_URL = 'ws://dhcp2-236.si.umich.edu:9000'#"ws://localhost:9000";#'dhcp3-173.si.umich.edu:9000'
-OUTPUT_JSON_SPEC = {'twitter_ids':[],'twitter_tags':[],'flickr_ids':[]}
+#OUTPUT_JSON_SPEC = {'twitter_ids':[],'twitter_tags':[],'flickr_ids':[]}
 
 _curConf = {}
 nextDivId = 0
@@ -75,9 +75,11 @@ def SendToWSServer(finalActions):
     # remove un needed divs
     for ac in _curConf:
         if ac in _nextConf:
+            print 'key found in the new conf:'+ac
             for c in _curConf[ac]:
-                print c
+                #print "value in old conf:"+c
                 if c in _nextConf[ac]:
+                    print "value found in new conf:"+c
                     # change the id to the one already set
                     _nextConf[ac][c]=_curConf[ac][c]
                     # add the id to _dontAdd
@@ -85,16 +87,19 @@ def SendToWSServer(finalActions):
                 else:
                     # remove the div element from the renderer
                     #Renderer.Remove(_curConf[c])
+                    print "removing conf:"+_curConf[ac][c]
                     ws.send(dumps(r.getRemoveJSON(_curConf[ac][c])))
-            else:
-                ws.send(dumps(r.getRemoveJSON(_curConf[ac][c])))
+        else:
+            print "removing conf:"
+            print _curConf[ac]
+            ws.send(dumps(r.getRemoveJSON(_curConf[ac][c])))
         
     # add the ones in nextConf to the renderer, and those not in dontAdd
     for ac in _nextConf:
         for c in _nextConf[ac]:
             if c not in _dontAdd[ac]:
                 add_json = r.getAddJSON(_nextConf[ac][c], GetSource(ac, c), width, height)
-                print(dumps(add_json))
+                print "adding json:" + dumps(add_json)
                 ws.send(dumps(add_json))
     
     _curConf = _nextConf
