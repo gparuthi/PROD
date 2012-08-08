@@ -22,11 +22,11 @@ def FinalActionsCalc(_actions, finalActions):
     #print _actions
     for a in _actions:
         if a in finalActions:
-            print a + "--" 
-            print finalActions[a]
-            print _actions[a]
+            #print a + "--" 
+            #print finalActions[a]
+            #print _actions[a]
             finalActions[a] = CURRENT_OPERATION(finalActions[a], _actions[a]) #change this function for the required operation
-            print finalActions
+            #print finalActions
         else:
             finalActions[a] = _actions[a]
     return finalActions
