@@ -93,7 +93,9 @@ def SendToWSServer(finalActions):
         else:
             print "removing conf:"
             print _curConf[ac]
-            ws.send(dumps(r.getRemoveJSON(_curConf[ac][c])))
+            # send remove command for all the values for current ac.. ac is flickr_tags, c is 'dogs,cats' etc
+            for c in _curConf[ac]:
+                ws.send(dumps(r.getRemoveJSON(_curConf[ac][c])))
         
     # add the ones in nextConf to the renderer, and those not in dontAdd
     for ac in _nextConf:
