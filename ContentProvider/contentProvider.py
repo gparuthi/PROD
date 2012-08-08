@@ -22,7 +22,11 @@ def FinalActionsCalc(_actions, finalActions):
     #print _actions
     for a in _actions:
         if a in finalActions:
+            print a + "--" 
+            print finalActions[a]
+            print _actions[a]
             finalActions[a] = CURRENT_OPERATION(finalActions[a], _actions[a]) #change this function for the required operation
+            print finalActions
         else:
             finalActions[a] = _actions[a]
     return finalActions
@@ -38,6 +42,7 @@ def RedisListener(ps,rc):
                 print("sending to redis...")
                 #read the list user_action_list and send it to the function  
                 user_actions = rc.hgetall("user_action_HS")
+                print user_actions
                 for key in user_actions:
                     finalActions = FinalActionsCalc(loads(user_actions[key]), finalActions)
                 #publish it to the renderer channel
@@ -56,5 +61,6 @@ def main():
     print('Listening...')
     RedisListener(ps,rc)
             
+
 
 main()

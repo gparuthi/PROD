@@ -14,4 +14,4 @@ def intersect(a, b):
 
 def union(a, b):
     """ return the union of two lists """
-    return a.append(b)
+    return list(set(a) | set(b))
