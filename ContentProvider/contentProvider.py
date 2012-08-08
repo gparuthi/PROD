@@ -16,7 +16,6 @@ from PROD2.com.retry_decorator import Retry
 REDIS_SERVER_URL = 'dhcp2-236.si.umich.edu'
 
 REDIS_SERVER_PORT = 6379
-WEBSOCKET_SERVER_URL = 'ws://dhcp3-173.si.umich.edu:9000'#"ws://localhost:9000";#'dhcp3-173.si.umich.edu:9000'
 CURRENT_OPERATION = union;
 
 def FinalActionsCalc(_actions, finalActions):
@@ -28,37 +27,7 @@ def FinalActionsCalc(_actions, finalActions):
             finalActions[a] = _actions[a]
     return finalActions
 
-@handle_exception(wssError)
-def SendToWSServer(finalActions):
-    ws = create_connection(WEBSOCKET_SERVER_URL)
-    ws.send("RESET");
-
-    for ac in finalActions:
-        print "key:" + ac + "| value:" + ','.join(finalActions[ac])
-        if(ac=="twitter_ids"):
-            #3 according to the output application, load the js code for each widget and broadcast it to the browser
-            msg = outputAppHandlers.TwitterIdJS(finalActions[ac])
-            print msg
-            ws.send(msg)
-        if(ac=="twitter_tags"):
-            #3 according to the output application, load the js code for each widget and broadcast it to the browser
-            msg = outputAppHandlers.TwitterTagsJS(finalActions[ac])
-            print msg
-            ws.send(msg)
-            
-        if(ac=="flickr_tags"):            
-            #3 according to the output application, load the js code for each widget and broadcast it to the browser
-            msg = outputAppHandlers.FlickrTags(finalActions[ac])
-            print msg
-            ws.send(msg)
-            
-        if(ac=="flickr_ids"):            
-            #3 according to the output application, load the js code for each widget and broadcast it to the browser
-            msg = outputAppHandlers.FlickrTags(finalActions[ac])
-            print msg
-            ws.send(msg)
-         
-    ws.close()
+#@handle_exception(wssError)
     
 def RedisListener(ps,rc):
     for item in ps.listen():

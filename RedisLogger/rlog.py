@@ -6,7 +6,7 @@ Created on Aug 1, 2012
 import redis
 import datetime
 
-REDIS_SERVER_URL = 'dhcp2-236.si.umich.edu'
+REDIS_SERVER_URL = 'gauravparuthi.com'
 
 def RedisListener(ps,rc):
     for item in ps.listen():
