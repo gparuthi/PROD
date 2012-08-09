@@ -76,7 +76,7 @@ def SendToWSServer(finalActions):
     # remove un needed divs
     for ac in _curConf:
         if ac in _nextConf:
-            print 'key found in the new conf:'+ac
+            print 'key also found in the new conf:'+ac
             for c in _curConf[ac]:
                 #print "value in old conf:"+c
                 if c in _nextConf[ac]:
@@ -88,7 +88,7 @@ def SendToWSServer(finalActions):
                 else:
                     # remove the div element from the renderer
                     #Renderer.Remove(_curConf[c])
-                    print "removing conf:"+_curConf[ac][c]
+                    # print "removing conf:"+_curConf[ac][c]
                     ws.send(dumps(r.getRemoveJSON(_curConf[ac][c])))
         else:
             print "removing conf:"
